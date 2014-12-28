@@ -1,0 +1,133 @@
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <FrameLayout
+                android:id="@+id/popup_frame"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/content_frame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </FrameLayout>
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/context_popup"
+                android:layout_width="225dp"
+                android:layout_height="225dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/menu_bg"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="80dp"
+                        style="?android:attr/buttonBarStyle"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="10dp">
+
+                        <TextView
+                            android:layout_width="165dp"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="Context Menu"
+                            android:id="@+id/textView2"
+                            android:phoneNumber="false"
+                            android:layout_marginLeft="10dp" />
+
+                        <Button
+                            android:id="@+id/contextClose"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_action_cancel"
+                            style="?android:attr/buttonBarButtonStyle"/>
+
+
+                    </LinearLayout>
+
+                    <ScrollView
+
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:id="@+id/scrollView3"
+                        android:layout_weight="1"
+                        android:background="@drawable/menu_bg">
+
+                        <LinearLayout
+                            style="?android:attr/buttonBarStyle"
+                            android:orientation="vertical"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content">
+
+
+
+                            <Button
+                                style="?android:attr/buttonBarButtonStyle"
+                                android:id="@+id/contextSave"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:text="Save"/>
+
+                        </LinearLayout>
+                    </ScrollView>
+
+                </LinearLayout>
+
+
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:baselineAligned="false">
+
+            <FrameLayout
+                android:id="@+id/nav_frame"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+            </FrameLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <!-- The navigation menu -->
+
+    <ExpandableListView
+        android:id="@+id/lvexp"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="#cc000000"
+        android:choiceMode="singleChoice"/>
+
+</android.support.v4.widget.DrawerLayout>

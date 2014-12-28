@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="app_name">Hockey Finder</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="options_exit_text">Exit</string>
+
+    <string name="social">Social Media</string>
+    <string name="forward">Forward</string>
+    <string name="back">Back</string>
+    <string name="my_menu1">Login</string>
+    <string name="my_menu3">My Account</string>
+    <string name="my_menu4">Change Password</string>
+    <string name="my_menu8">Logout</string>
+
+    <string name="title_activity_pet_clinic">PetClinicActivity</string>
+    <string name="back2">Back</string>
+    <string name="close2">Close</string>
+    <string name="refresh2">Refresh</string>
+    <string name="forward2">Forward</string>
+    <string name="facebook">Facebook</string>
+    <string name="youtube">You Tube</string>
+    <string name="twitter">Twitter</string>
+    <string name="facebookgroup">Facebook Group</string>
+    <string name="picasa">HF Pics</string>
+    <string name="loading" tools:ignore="TypographyEllipsis">Loading...</string>
+    <string name="cancel2">Cancel</string>
+    <string name="closeapp">Close App</string>
+    <string name="notification">Notification</string>
+    <string name="addnotification">Add Notification</string>
+    <string name="share">Share</string>
+
+    <string name="highlight">Highlight</string>
+    <string name="addNote">Add Note</string>
+    <string name="fbNotify">Facebook Notification</string>
+    <string name="excel">Excel</string>
+    <string name="schwans">Schwans</string>
+    <string name="fogerty">Fogerty</string>
+    <string name="brooklynpark">Brooklyn Park</string>
+    <string name="veterans">Veterans Memorial</string>
+    <string name="vadnais">Vadnais Heights</string>
+    <string name="victory">Victory Memorial</string>
+    <string name="polar">Polar</string>
+    <string name="mnmade">Minnesota Made</string>
+    <string name="parade">Parade Ice Garden</string>
+    <string name="oscar">Oscar Johnson</string>
+    <string name="highland">Highland</string>
+    <string name="flaaa">FLAAA</string>
+    <string name="s">Start</string>
+    <string name="c">Clear dateCheck Log</string>
+    <string name="x">X</string>
+    <string name="startservice">Start Service</string>
+    <string name="stopservice">Stop Service</string>
+    <string name="selectAll">Select All Arenas</string>
+
+</resources>

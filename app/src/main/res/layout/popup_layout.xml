@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popup"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+
+            android:background="@drawable/menu_bg">
+
+            <ImageButton
+                android:id="@+id/imageView5"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                style="?android:attr/actionButtonStyle"
+                android:src="@drawable/ic_launcher"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name" />
+            <View
+                android:layout_height="38dp"
+                android:layout_width="1px"
+                android:background="#4D000000"
+                android:layout_gravity="center"
+                android:layout_marginTop="0dp"/>
+            <ImageButton
+                android:id="@+id/show_popup1"
+                android:layout_width="48dp"
+                android:layout_height="fill_parent"
+                style="?android:attr/actionButtonStyle"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_fa_facebook"
+                android:contentDescription="@string/facebook" />
+            <View
+                android:layout_height="38dp"
+                android:layout_width="1px"
+                android:background="#4D000000"
+                android:layout_gravity="center"
+                android:layout_marginTop="0dp"/>
+            <ImageButton
+                android:id="@+id/show_popup2"
+                android:layout_width="48dp"
+                android:layout_height="fill_parent"
+                style="?android:attr/actionButtonStyle"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_fa_youtube"
+                android:contentDescription="@string/youtube" />
+            <View android:layout_height="38dp"
+                android:layout_width="1px"
+                android:background="#4D000000"
+                android:layout_gravity="center"
+                android:layout_marginTop="0dp"/>
+            <ImageButton
+                android:id="@+id/show_popup3"
+                android:layout_width="48dp"
+                android:layout_height="fill_parent"
+                style="?android:attr/actionButtonStyle"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_fa_twitter"
+                android:contentDescription="@string/twitter" />
+            <View android:layout_height="38dp"
+                android:layout_width="1px"
+                android:background="#4D000000"
+                android:layout_gravity="center"
+                android:layout_marginTop="0dp"/>
+            <ImageButton
+                android:id="@+id/show_popup4"
+                android:layout_width="48dp"
+                android:layout_height="fill_parent"
+                style="?android:attr/actionButtonStyle"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_fa_facebook"
+                android:contentDescription="@string/facebookgroup" />
+            <View android:layout_height="38dp"
+                android:layout_width="1px"
+                android:background="#4D000000"
+                android:layout_gravity="center"
+                android:layout_marginTop="0dp"/>
+            <ImageButton
+                android:id="@+id/show_popup5"
+                android:layout_width="48dp"
+                android:layout_height="fill_parent"
+                style="?android:attr/actionButtonStyle"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_action_picasa"
+                android:contentDescription="@string/picasa" />
+            <View android:layout_height="38dp"
+                android:layout_width="1px"
+                android:background="#4D000000"
+                android:layout_gravity="center"
+                android:layout_marginTop="0dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/header_bg"
+            android:baselineAligned="false">
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swipe_container2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+                <WebView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/webView2"
+                    android:layout_weight="1"/>
+            </android.support.v4.widget.SwipeRefreshLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+
+
+    <RelativeLayout
+        android:layout_width="150dp"
+        android:layout_height="120dp"
+        android:layout_centerInParent="true"
+        android:id="@+id/rlpopup1"
+        android:background="@drawable/header_bg">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView12"
+            android:background="@android:color/transparent"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_launcher"
+            android:layout_centerInParent="true"
+            android:visibility="visible"
+            android:contentDescription="@string/app_name" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loading"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="85dp"
+            android:id="@+id/textView" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

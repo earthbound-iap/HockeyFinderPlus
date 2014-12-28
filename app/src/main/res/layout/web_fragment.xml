@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:orientation="vertical"
+    android:background="@android:color/transparent">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/header_bg">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+
+            <WebView
+                android:id="@+id/webView"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"/>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </LinearLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="150dp"
+        android:layout_height="120dp"
+        android:layout_centerInParent="true"
+        android:id="@+id/rlpopup2"
+        android:background="@drawable/header_bg">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView12"
+            android:background="@android:color/transparent"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_launcher"
+            android:layout_centerInParent="true"
+            android:visibility="visible"
+            android:contentDescription="@string/app_name" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loading"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="85dp"
+            android:id="@+id/textView" />
+
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="250dp"
+        android:layout_height="180dp"
+        android:layout_centerInParent="true"
+        android:id="@+id/exit_popup"
+        android:background="@drawable/header_bg">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:id="@+id/imageView678"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_launcher"
+                android:contentDescription="@string/app_name" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:text="@string/cancel2"
+                android:id="@+id/cancel_close"
+                android:layout_weight="1"
+                android:background="@drawable/button"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="55dp" >
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:id="@+id/imageView435"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_action_cancel"
+                android:contentDescription="@string/close2" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:text="@string/closeapp"
+                android:id="@+id/close_app"
+                android:layout_weight="1"
+                android:background="@drawable/button"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="110dp" >
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:id="@+id/imageView4678"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_action_new_event"
+                android:contentDescription="@string/notification" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:text="@string/addnotification"
+                android:id="@+id/close_notification"
+                android:layout_weight="1"
+                android:background="@drawable/button"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/arena_popup"
+        android:layout_width="225dp"
+        android:layout_height="300dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/menu_bg"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                style="?android:attr/buttonBarStyle"
+                android:layout_weight="1">
+
+                <CheckBox
+                    android:layout_width="165dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/selectAll"
+                    android:id="@+id/cbAll"/>
+
+                <Button
+                    android:id="@+id/cbSettings"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_action_settings"
+                    style="?android:attr/buttonBarButtonStyle"/>
+
+
+                </LinearLayout>
+
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/scrollView"
+                android:layout_weight="1"
+                android:background="@drawable/menu_bg">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <CheckBox
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/excel"
+                        android:id="@+id/cbExcel" />
+
+                    <CheckBox
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/schwans"
+                        android:id="@+id/cbSchwans"/>
+
+                    <CheckBox
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fogerty"
+                        android:id="@+id/cbFogerty"/>
+
+                    <CheckBox
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/brooklynpark"
+                        android:id="@+id/cbBrooklynPark"/>
+
+                    <CheckBox
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/vadnais"
+                        android:id="@+id/cbVadnais"/>
+
+                    <CheckBox
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/veterans"
+                        android:id="@+id/cbVeterans"/>
+
+                    <CheckBox
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/victory"
+                        android:id="@+id/cbVictory"/>
+
+                    <CheckBox
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/polar"
+                        android:id="@+id/cbPolar"/>
+
+                    <CheckBox
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mnmade"
+                        android:id="@+id/cbMNMade"/>
+
+                    <CheckBox
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/parade"
+                        android:id="@+id/cbParadeIceGarden"/>
+
+                    <CheckBox
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/oscar"
+                        android:id="@+id/cbOscarJohnson"/>
+
+                    <CheckBox
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/highland"
+                        android:id="@+id/cbHighland"/>
+
+                    <CheckBox
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/flaaa"
+                        android:id="@+id/cbFLAAASC"/>
+
+                </LinearLayout>
+            </ScrollView>
+
+            <LinearLayout
+                style="?android:attr/buttonBarStyle"
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_weight="1">
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:id="@+id/startArena"
+                    android:layout_width="165dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/s"/>
+
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:id="@+id/cancelArena"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/x"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/settings_popup"
+            android:layout_width="fill_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/menu_bg"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <ScrollView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/scrollView2"
+                    android:layout_weight="1"
+
+                    android:background="@drawable/menu_bg">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+
+                        <CheckBox
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Notification LED"
+                            android:id="@+id/cbLED" />
+                        <CheckBox
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Notification Sound"
+                            android:id="@+id/cbSOUND" />
+                        <CheckBox
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Notification Vibrate"
+                            android:id="@+id/cbVIBRATE" />
+                        <CheckBox
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="20 min."
+                            android:id="@+id/cb20" />
+                        <CheckBox
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="40 min."
+                            android:id="@+id/cb40" />
+                        <CheckBox
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="60 min."
+                            android:id="@+id/cb60" />
+
+                    </LinearLayout>
+                </ScrollView>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="215dp"
+                    android:layout_weight="1">
+
+                    <Button
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cancel Notifications"
+                        android:id="@+id/cancelNotify"
+                        android:textStyle="bold|italic" />
+
+                    <Button
+                        android:id="@+id/clearArena"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/c"
+                        android:textStyle="bold|italic" />
+
+                    </LinearLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

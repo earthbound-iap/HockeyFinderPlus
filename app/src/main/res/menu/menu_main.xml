@@ -1,0 +1,55 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+
+    tools:context=".MainActivity">
+
+
+    <item android:id="@+id/social"
+        android:title="@string/social"
+        android:showAsAction="always"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_fa_tablet"
+        tools:ignore="AlwaysShowAction,AppCompatResource" />
+
+    <item
+        android:id="@+id/menu_item1"
+        android:orderInCategory="102"
+        android:showAsAction="never"
+        android:icon="@drawable/ic_action_not_secure"
+        android:title="@string/my_menu1"
+        tools:ignore="AppCompatResource" />
+
+    <item
+        android:id="@+id/menu_item3"
+        android:orderInCategory="103"
+        android:showAsAction="never"
+        android:icon="@drawable/ic_action_person"
+        android:title="@string/my_menu3"
+        tools:ignore="AppCompatResource" />
+
+    <item
+        android:id="@+id/menu_item4"
+        android:orderInCategory="104"
+        android:showAsAction="never"
+        android:icon="@drawable/ic_action_new_account"
+        android:title="@string/my_menu4"
+        tools:ignore="AppCompatResource" />
+
+    <item
+        android:id="@+id/menu_item8"
+        android:orderInCategory="105"
+        android:showAsAction="never"
+        android:icon="@drawable/ic_action_secure"
+        android:title="@string/my_menu8"
+        tools:ignore="AppCompatResource" />
+
+    <item
+        android:id="@+id/menu_item9"
+        android:orderInCategory="106"
+        android:showAsAction="never"
+        android:icon="@drawable/ic_action_new_event"
+        android:title="@string/startservice"
+        tools:ignore="AppCompatResource" />
+
+</menu>
