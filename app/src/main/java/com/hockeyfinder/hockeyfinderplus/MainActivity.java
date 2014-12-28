@@ -81,8 +81,6 @@ public class MainActivity extends Activity {
 
     private PendingIntent pendingIntent;
 
-    File sdDir = new File(Environment.getExternalStorageDirectory().getPath());
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -94,6 +92,7 @@ public class MainActivity extends Activity {
 
         pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
 
+        File sdDir = new File(Environment.getExternalStorageDirectory().getPath());
 
         File createDir = new File(sdDir.getAbsolutePath() + "/HockeyFinder/Data");
         //noinspection ResultOfMethodCallIgnored
@@ -159,14 +158,13 @@ public class MainActivity extends Activity {
 
             mDrawerLayout.setDrawerListener(mDrawerToggle);
 
+            android.app.Fragment fragment = new MyWebViewPopup();
+
+            android.app.Fragment fragment2 = new MyWebView();
+
+            android.app.Fragment fragment3 = new MyNavView();
+
             if (savedInstanceState == null) {
-
-                // on first time display view for first nav item
-                android.app.Fragment fragment = new MyWebViewPopup();
-
-                android.app.Fragment fragment2 = new MyWebView();
-
-                android.app.Fragment fragment3 = new MyNavView();
 
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
 
@@ -187,73 +185,73 @@ public class MainActivity extends Activity {
         // Adding child data
         final List<String> accountUrl;
 
-        accountUrl = new ArrayList<>();
+            accountUrl = new ArrayList<>();
 
-        accountUrl.add("http://www.hockeyfinder.com/my-games/");
+            accountUrl.add("http://www.hockeyfinder.com/my-games/");
 
-        accountUrl.add("http://www.hockeyfinder.com/account/");
+            accountUrl.add("http://www.hockeyfinder.com/account/");
 
         final List<String> playerUrl;
 
-        playerUrl = new ArrayList<>();
+            playerUrl = new ArrayList<>();
 
-        playerUrl.add("http://www.hockeyfinder.com/skate-times/");
+            playerUrl.add("http://www.hockeyfinder.com/skate-times/");
 
-        playerUrl.add("http://www.hockeyfinder.com/tournaments/");
+            playerUrl.add("http://www.hockeyfinder.com/tournaments/");
 
-        playerUrl.add("(http://www.hockeyfinder.com/clinics/");
+            playerUrl.add("(http://www.hockeyfinder.com/clinics/");
 
-        playerUrl.add("http://www.hockeyfinder.com/hockeyleague/");
+            playerUrl.add("http://www.hockeyfinder.com/hockeyleague/");
 
-        playerUrl.add("http://www.hockeyfinder.com/rink-directory/");
+            playerUrl.add("http://www.hockeyfinder.com/rink-directory/");
 
         final List<String> refereeUrl;
 
-        refereeUrl = new ArrayList<>();
+            refereeUrl = new ArrayList<>();
 
-        refereeUrl.add("http://www.hockeyfinder.com/referees-needed/");
+            refereeUrl.add("http://www.hockeyfinder.com/referees-needed/");
 
         final List<String> organizerUrl;
 
-        organizerUrl = new ArrayList<>();
+            organizerUrl = new ArrayList<>();
 
-        organizerUrl.add("http://www.hockeyfinder.com/promote-hockey-games/");
+            organizerUrl.add("http://www.hockeyfinder.com/promote-hockey-games/");
 
-        organizerUrl.add("(http://www.hockeyfinder.com/clinics/");
+            organizerUrl.add("(http://www.hockeyfinder.com/clinics/");
 
-        organizerUrl.add("http://www.hockeyfinder.com/rent-a-goalie-or-referee/");
+            organizerUrl.add("http://www.hockeyfinder.com/rent-a-goalie-or-referee/");
 
-        organizerUrl.add("http://www.hockeyfinder.com/rent-a-goalie-or-referee/");
+            organizerUrl.add("http://www.hockeyfinder.com/rent-a-goalie-or-referee/");
 
         final List<String> leaguesUrl;
 
-        leaguesUrl = new ArrayList<>();
+            leaguesUrl = new ArrayList<>();
 
-        leaguesUrl.add("http://www.hockeyfinder.com/hockeyleague/");
+            leaguesUrl.add("http://www.hockeyfinder.com/hockeyleague/");
 
-        leaguesUrl.add("http://www.hockeyfinder.com/wham/");
+            leaguesUrl.add("http://www.hockeyfinder.com/wham/");
 
-        leaguesUrl.add("http://www.hockeyfinder.com/youthhockeyleague/");
+            leaguesUrl.add("http://www.hockeyfinder.com/youthhockeyleague/");
 
-        leaguesUrl.add("http://www.hockeyfinder.com/league-calendar/");
+            leaguesUrl.add("http://www.hockeyfinder.com/league-calendar/");
 
-        leaguesUrl.add("http://www.hockeyfinder.com/photos/");
+            leaguesUrl.add("http://www.hockeyfinder.com/photos/");
 
         final List<String> infoUrl;
 
-        infoUrl = new ArrayList<>();
+            infoUrl = new ArrayList<>();
 
-        infoUrl.add("http://www.hockeyfinder.com/register/");
+            infoUrl.add("http://www.hockeyfinder.com/register/");
 
-        infoUrl.add("http://www.hockeyfinder.com/tour/");
+            infoUrl.add("http://www.hockeyfinder.com/tour/");
 
-        infoUrl.add("http://www.hockeyfinder.com/faq/");
+            infoUrl.add("http://www.hockeyfinder.com/faq/");
 
-        infoUrl.add("http://www.hockeyfinder.com/sponsorship/");
+            infoUrl.add("http://www.hockeyfinder.com/sponsorship/");
 
-        infoUrl.add("http://www.hockeyfinder.com/custom-hockey-jerseys/");
+            infoUrl.add("http://www.hockeyfinder.com/custom-hockey-jerseys/");
 
-        infoUrl.add("http://www.hockeyfinder.com/contact/");
+            infoUrl.add("http://www.hockeyfinder.com/contact/");
 
         expListView = (ExpandableListView) findViewById(R.id.lvexp);
 
@@ -1712,6 +1710,8 @@ public class MainActivity extends Activity {
 
                     case R.id.clearArena:
 
+                        File sdDir = new File(Environment.getExternalStorageDirectory().getPath());
+
                         File file = new File(sdDir.getAbsolutePath() + "/HockeyFinder/dateCheck.txt");
 
                         //noinspection ResultOfMethodCa
@@ -1810,8 +1810,6 @@ public class MainActivity extends Activity {
 
         manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
 
-        Log.w("MAINACTIVITY", "ALARMSERVICE: starting");
-
         Log.i("ALARM/MANAGER", "set: " + minutes);
 
     }
@@ -1895,8 +1893,6 @@ public class MainActivity extends Activity {
 
                 imageUrl = result.getExtra();
 
-                Toast.makeText(this, imageUrl, Toast.LENGTH_LONG).show();
-
                 contextpopup(imageUrl);
 
             }
@@ -1905,17 +1901,9 @@ public class MainActivity extends Activity {
 
     }
 
-
-    public boolean onContextItemSelected(MenuItem item, String imageUrl) {
-
-        return true;
-    }
-
     public void downloadFile(String uRl2) {
 
-        File direct = new File(Environment.getExternalStorageDirectory()
-
-                + "/HockeyFinder/Images/");
+        File direct = new File(Environment.getExternalStorageDirectory() + "/HockeyFinder/Images/");
 
         if (!direct.exists()) {
 
@@ -1965,13 +1953,13 @@ public class MainActivity extends Activity {
 
         final RelativeLayout context_popup = (RelativeLayout) findViewById(R.id.context_popup);
 
-        context_popup.setVisibility(View.VISIBLE);
-
-        final String uRl2 = imageUrl;
-
         Button contextClose = (Button) findViewById(R.id.contextClose);
 
         Button contextSave = (Button) findViewById(R.id.contextSave);
+
+        context_popup.setVisibility(View.VISIBLE);
+
+        final String uRl2 = imageUrl;
 
         View.OnClickListener onClickListener5 = new View.OnClickListener() {
 
