@@ -81,6 +81,8 @@ public class MainActivity extends Activity {
 
     private PendingIntent pendingIntent;
 
+    File sdDir = new File(Environment.getExternalStorageDirectory().getPath());
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -91,8 +93,6 @@ public class MainActivity extends Activity {
         Intent alarmIntent = new Intent(this, AlarmReceiver.class);
 
         pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
-
-        File sdDir = new File(Environment.getExternalStorageDirectory().getPath());
 
         File createDir = new File(sdDir.getAbsolutePath() + "/HockeyFinder/Data");
         //noinspection ResultOfMethodCallIgnored
@@ -1709,8 +1709,6 @@ public class MainActivity extends Activity {
                         break;
 
                     case R.id.clearArena:
-
-                        File sdDir = new File(Environment.getExternalStorageDirectory().getPath());
 
                         File file = new File(sdDir.getAbsolutePath() + "/HockeyFinder/dateCheck.txt");
 
