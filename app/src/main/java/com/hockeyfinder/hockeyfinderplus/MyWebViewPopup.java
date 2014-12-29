@@ -43,46 +43,28 @@ public class MyWebViewPopup extends Fragment {
 
         // set up the WebView
         if(getView() != null) {
-
             ((MainActivity) getActivity()).wv = (WebView) getView().findViewById(R.id.webView2);
-
             ((MainActivity) getActivity()).wv.getSettings().setJavaScriptEnabled(true);
-
             ((MainActivity) getActivity()).wv.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-
             ((MainActivity) getActivity()).wv.getSettings().setSupportMultipleWindows(true);
-
             ((MainActivity) getActivity()).wv.getSettings().setAllowUniversalAccessFromFileURLs (true);
-
             ((MainActivity) getActivity()).wv.getSettings().setLoadWithOverviewMode (true);
-
             //noinspection deprecation
-
             ((MainActivity) getActivity()).wv.getSettings().setSavePassword (true);
-
             ((MainActivity) getActivity()).wv.getSettings().setAllowFileAccess (true);
-
             ((MainActivity) getActivity()).wv.getSettings().setSupportZoom (true);
-
             ((MainActivity) getActivity()).wv.getSettings().setBuiltInZoomControls(true);
-
             swipeLayout2 = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_container2);
-
         }
 
         ((MainActivity) getActivity()).wv.setWebChromeClient(new WebChromeClient() {
 
         });
 
-
-
         //noinspection deprecation
         swipeLayout2.setColorScheme(android.R.color.holo_blue_bright,
-
                 android.R.color.holo_green_light,
-
                 android.R.color.holo_orange_light,
-
                 android.R.color.holo_red_light);
 
         swipeLayout2.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -95,15 +77,10 @@ public class MyWebViewPopup extends Fragment {
         });
 
         ImageButton btn_show0 = (ImageButton)getView().findViewById(R.id.imageView5);
-
         ImageButton btn_show1 = (ImageButton)getView().findViewById(R.id.show_popup1);
-
         ImageButton btn_show2 = (ImageButton)getView().findViewById(R.id.show_popup2);
-
         ImageButton btn_show3 = (ImageButton)getView().findViewById(R.id.show_popup3);
-
         ImageButton btn_show4 = (ImageButton)getView().findViewById(R.id.show_popup4);
-
         ImageButton btn_show5 = (ImageButton)getView().findViewById(R.id.show_popup5);
 
         View.OnClickListener onClickListener2 = new View.OnClickListener() {
@@ -118,33 +95,25 @@ public class MyWebViewPopup extends Fragment {
                     case R.id.imageView5:
 
                         FrameLayout layout2 = (FrameLayout)getActivity().findViewById(R.id.popup_frame);
-
                         FrameLayout layout = (FrameLayout)getActivity().findViewById(R.id.content_frame);
 
                         if (layout2.getVisibility() == View.VISIBLE) {
-
                             layout2.setVisibility(View.GONE);
-
                             layout.setVisibility(View.VISIBLE);
-
                             final ActionBar actionBar = getActivity().getActionBar();
 
                             if (actionBar != null) {
-
                                 actionBar.show();
-
                             }
 
                             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 
                         }
-
                         break;
 
                     case R.id.show_popup1:
 
                         url3 = "https://m.facebook.com/hockeyfindercom";
-
                         ((MainActivity)getActivity()).wv.loadUrl(url3);
 
                         break;
@@ -152,7 +121,6 @@ public class MyWebViewPopup extends Fragment {
                     case R.id.show_popup2:
 
                         url3 = "http://www.youtube.com/user/Hockeyfinder";
-
                         ((MainActivity)getActivity()).wv.loadUrl(url3);
 
                         break;
@@ -160,7 +128,6 @@ public class MyWebViewPopup extends Fragment {
                     case R.id.show_popup3:
 
                         url3 = "https://mobile.twitter.com/hockeyfinder";
-
                         ((MainActivity)getActivity()).wv.loadUrl(url3);
 
                         break;
@@ -168,7 +135,6 @@ public class MyWebViewPopup extends Fragment {
                     case R.id.show_popup4:
 
                         url3 = "https://m.facebook.com/groups/hockeyfinder/";
-
                         ((MainActivity)getActivity()).wv.loadUrl(url3);
 
                         break;
@@ -176,7 +142,6 @@ public class MyWebViewPopup extends Fragment {
                     case R.id.show_popup5:
 
                         url3 = "http://www.hockeyfinder.com/photos/";
-
                         ((MainActivity)getActivity()).wv.loadUrl(url3);
 
                         break;
@@ -188,15 +153,10 @@ public class MyWebViewPopup extends Fragment {
         };
 
         btn_show0.setOnClickListener(onClickListener2);
-
         btn_show1.setOnClickListener(onClickListener2);
-
         btn_show2.setOnClickListener(onClickListener2);
-
         btn_show3.setOnClickListener(onClickListener2);
-
         btn_show4.setOnClickListener(onClickListener2);
-
         btn_show5.setOnClickListener(onClickListener2);
 
         ((MainActivity)getActivity()).wv.setDownloadListener(new DownloadListener() {
@@ -204,9 +164,7 @@ public class MyWebViewPopup extends Fragment {
             public void onDownloadStart(String url, String userAgent,String contentDisposition, String mimetype,long contentLength) {
 
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-
                 intent.setData(Uri.parse(url));
-
                 startActivity(intent);
 
             }
@@ -221,17 +179,11 @@ public class MyWebViewPopup extends Fragment {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
                 if (url.contains(".com")) {
-
                     ((MainActivity)getActivity()).wv.loadUrl(url);
-
                     return false;
-
                 }
-
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-
                 startActivity(intent);
-
                 return true;
 
             }
@@ -240,24 +192,33 @@ public class MyWebViewPopup extends Fragment {
             @Override
             public WebResourceResponse shouldInterceptRequest(final WebView view, String url) {
 
+                if (url.startsWith("tel:")) {
+                    startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(url)));
+                } else if (url.startsWith("mailto:")) {
+                    url = url.replaceFirst("mailto:", "");
+                    url = url.trim();
+                    Intent i = new Intent(Intent.ACTION_SEND);
+                    i.setType("plain/text").putExtra(Intent.EXTRA_EMAIL, new String[]{url});
+                    startActivity(i);
+                } else if (url.startsWith("maps")) {
+                    Intent searchAddress = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(searchAddress);
+                } else if (url.startsWith("www.google")) {
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(mapIntent);
+                } else if (url.contains("hockeyfinder")) {
+                    ((MainActivity)getActivity()).wv.loadUrl(url);
+                }
+
                 if (url.equals("http://pagead2.googlesyndication.com/pagead/show_ads.js")) {
-
                     ByteArrayInputStream test1 = null;
-
                     try {
-
                         test1 = new ByteArrayInputStream("// script blocked".getBytes("UTF-8"));
-
                     } catch (UnsupportedEncodingException e) {
-
                         e.printStackTrace();
-
                     }
-
                     return new WebResourceResponse("text/javascript", "UTF-8", test1);
-
                 } else {
-
                     //noinspection deprecation
                     return super.shouldInterceptRequest(view, url);
 
@@ -270,9 +231,7 @@ public class MyWebViewPopup extends Fragment {
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
 
                 swipeLayout2.setRefreshing(true);
-
                 ((MainActivity)getActivity()).wv.setVisibility(View.INVISIBLE);
-
                 rlpopup1.setVisibility(View.VISIBLE);
 
             }

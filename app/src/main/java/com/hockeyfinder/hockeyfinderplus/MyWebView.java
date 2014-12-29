@@ -31,44 +31,27 @@ public class MyWebView extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         final RelativeLayout rlpopup2 = (RelativeLayout) getActivity().findViewById(R.id.rlpopup2);
-
         final RelativeLayout exit_popup1 = (RelativeLayout) getActivity().findViewById(R.id.exit_popup);
-
         final RelativeLayout arena_popup = (RelativeLayout) getActivity().findViewById(R.id.arena_popup);
-
         final RelativeLayout settings_popup = (RelativeLayout) getActivity().findViewById(R.id.settings_popup);
 
         exit_popup1.setVisibility(View.INVISIBLE);
-
         arena_popup.setVisibility(View.INVISIBLE);
-
         settings_popup.setVisibility(View.INVISIBLE);
 
         // set up the WebView
         if(getView() != null) {
-
             ((MainActivity) getActivity()).webView = (WebView) getView().findViewById(R.id.webView);
-
             ((MainActivity) getActivity()).webView.getSettings().setJavaScriptEnabled(true);
-
             ((MainActivity) getActivity()).webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-
             ((MainActivity) getActivity()).webView.getSettings().setSupportMultipleWindows(true);
-
             ((MainActivity) getActivity()).webView.getSettings().setAllowUniversalAccessFromFileURLs (true);
-
             ((MainActivity) getActivity()).webView.getSettings().setLoadWithOverviewMode (true);
-
             //noinspection deprecation
-
             ((MainActivity) getActivity()).webView.getSettings().setSavePassword (true);
-
             ((MainActivity) getActivity()).webView.getSettings().setAllowFileAccess (true);
-
             ((MainActivity) getActivity()).webView.getSettings().setSupportZoom (true);
-
             ((MainActivity) getActivity()).webView.getSettings().setBuiltInZoomControls(true);
-
             swipeLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_container);
         }
 
@@ -78,11 +61,8 @@ public class MyWebView extends Fragment {
 
         //noinspection deprecation
         swipeLayout.setColorScheme(android.R.color.holo_blue_bright,
-
                 android.R.color.holo_green_light,
-
                 android.R.color.holo_orange_light,
-
                 android.R.color.holo_red_light);
 
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -99,9 +79,7 @@ public class MyWebView extends Fragment {
             public void onDownloadStart(String url, String userAgent,String contentDisposition, String mimetype,long contentLength) {
 
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-
                 intent.setData(Uri.parse(url));
-
                 startActivity(intent);
 
             }
@@ -116,39 +94,22 @@ public class MyWebView extends Fragment {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
                 if (url.startsWith("tel:")) {
-
                     startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(url)));
-
                 } else if (url.startsWith("mailto:")) {
-
                     url = url.replaceFirst("mailto:", "");
-
                     url = url.trim();
-
                     Intent i = new Intent(Intent.ACTION_SEND);
-
                     i.setType("plain/text").putExtra(Intent.EXTRA_EMAIL, new String[]{url});
-
                     startActivity(i);
-
                 } else if (url.startsWith("maps")) {
-
                     Intent searchAddress = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-
                     startActivity(searchAddress);
-
                 } else if (url.startsWith("www.google")) {
-
                     Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-
                     startActivity(mapIntent);
-
                 } else if (url.contains("hockeyfinder")) {
-
                     ((MainActivity)getActivity()).webView.loadUrl(url);
-
                     return false;
-
                 }
 
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -162,6 +123,24 @@ public class MyWebView extends Fragment {
             //intercept map request and redirect
             @Override
             public WebResourceResponse shouldInterceptRequest(final WebView view, String url) {
+
+                if (url.startsWith("tel:")) {
+                    startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(url)));
+                } else if (url.startsWith("mailto:")) {
+                    url = url.replaceFirst("mailto:", "");
+                    url = url.trim();
+                    Intent i = new Intent(Intent.ACTION_SEND);
+                    i.setType("plain/text").putExtra(Intent.EXTRA_EMAIL, new String[]{url});
+                    startActivity(i);
+                } else if (url.startsWith("maps")) {
+                    Intent searchAddress = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(searchAddress);
+                } else if (url.startsWith("www.google")) {
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(mapIntent);
+                } else if (url.contains("hockeyfinder")) {
+                    ((MainActivity)getActivity()).webView.loadUrl(url);
+                }
 
                 if (url.equals("http://pagead2.googlesyndication.com/pagead/show_ads.js")) {
 

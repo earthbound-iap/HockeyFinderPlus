@@ -24,9 +24,7 @@ public class ExpandableListAdapter3 extends BaseExpandableListAdapter {
     public ExpandableListAdapter3(Context context, List<String> listDataHeader,HashMap<String, List<String>> listChildData) {
 
         this._context = context;
-
         this._listDataHeader = listDataHeader;
-
         this._listDataChild = listChildData;
 
     }
@@ -53,17 +51,12 @@ public class ExpandableListAdapter3 extends BaseExpandableListAdapter {
         final String childText = (String) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
-
             LayoutInflater infalInflater = (LayoutInflater) this._context
-
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
             convertView = infalInflater.inflate(R.layout.list_item, null);
-
         }
 
         TextView txtListChild = (TextView) convertView
-
                 .findViewById(R.id.lblListItem);
 
         txtListChild.setText(childText);
@@ -76,30 +69,23 @@ public class ExpandableListAdapter3 extends BaseExpandableListAdapter {
     public int getChildrenCount(int groupPosition) {
 
         return this._listDataChild.get(this._listDataHeader.get(groupPosition))
-
                 .size();
 
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-
         return this._listDataHeader.get(groupPosition);
-
     }
 
     @Override
     public int getGroupCount() {
-
         return this._listDataHeader.size();
-
     }
 
     @Override
     public long getGroupId(int groupPosition) {
-
         return groupPosition;
-
     }
 
     @Override
@@ -108,21 +94,15 @@ public class ExpandableListAdapter3 extends BaseExpandableListAdapter {
         String headerTitle = (String) getGroup(groupPosition);
 
         if (convertView == null) {
-
             LayoutInflater infalInflater = (LayoutInflater) this._context
-
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
             convertView = infalInflater.inflate(R.layout.list_group, null);
-
         }
 
         TextView lblListHeader = (TextView) convertView
-
                 .findViewById(R.id.lblListHeader);
 
         lblListHeader.setTypeface(null, Typeface.BOLD);
-
         lblListHeader.setText(headerTitle);
 
         return convertView;
@@ -131,16 +111,12 @@ public class ExpandableListAdapter3 extends BaseExpandableListAdapter {
 
     @Override
     public boolean hasStableIds() {
-
         return false;
-
     }
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-
         return true;
-
     }
 
 }
