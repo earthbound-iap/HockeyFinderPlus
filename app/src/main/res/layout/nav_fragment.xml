@@ -4,10 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="48dp"
     android:background="@drawable/header_bg"
-    >
-    <View android:layout_height="fill_parent"
-        android:layout_width="1px"
-        android:background="#4D000000"/>
+    style="?android:attr/buttonBarStyle">
+
     <ImageButton
         android:id="@+id/backD"
         android:layout_width="fill_parent"
@@ -16,11 +14,9 @@
         android:enabled="true"
         android:layout_weight="1"
         android:src="@drawable/ic_action_previous_item"
-        style="?android:attr/actionButtonStyle"
+        style="?android:attr/buttonBarButtonStyle"
         android:contentDescription="@string/back2" />
-    <View android:layout_height="fill_parent"
-        android:layout_width="1px"
-        android:background="#4D000000"/>
+
     <ImageButton
         android:id="@+id/refreshD"
         android:layout_width="fill_parent"
@@ -29,11 +25,9 @@
         android:enabled="true"
         android:layout_weight="1"
         android:src="@drawable/ic_action_refresh"
-        style="?android:attr/actionButtonStyle"
+        style="?android:attr/buttonBarButtonStyle"
         android:contentDescription="@string/refresh2" />
-    <View android:layout_height="fill_parent"
-        android:layout_width="1px"
-        android:background="#4D000000"/>
+
     <ImageButton
         android:id="@+id/closeD"
         android:layout_width="fill_parent"
@@ -42,11 +36,9 @@
         android:enabled="true"
         android:layout_weight="1"
         android:src="@drawable/ic_action_cancel"
-        style="?android:attr/actionButtonStyle"
+        style="?android:attr/buttonBarButtonStyle"
         android:contentDescription="@string/close2" />
-    <View android:layout_height="fill_parent"
-        android:layout_width="1px"
-        android:background="#4D000000"/>
+
     <ImageButton
         android:id="@+id/forwardD"
         android:layout_width="fill_parent"
@@ -55,9 +47,7 @@
         android:enabled="true"
         android:layout_weight="1"
         android:src="@drawable/ic_action_next_item"
-        style="?android:attr/actionButtonStyle"
+        style="?android:attr/buttonBarButtonStyle"
         android:contentDescription="@string/forward2" />
-    <View android:layout_height="fill_parent"
-        android:layout_width="1px"
-        android:background="#4D000000"/>
+
 </LinearLayout>

@@ -27,7 +27,8 @@
             <WebView
                 android:id="@+id/webView"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"/>
+                android:layout_height="fill_parent"
+                android:background="@drawable/menu_bg2"/>
 
         </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
@@ -39,7 +40,7 @@
         android:layout_height="120dp"
         android:layout_centerInParent="true"
         android:id="@+id/rlpopup2"
-        android:background="@drawable/header_bg">
+        android:background="@drawable/menu_bg2">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -305,91 +306,97 @@
 
         </LinearLayout>
 
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/settings_popup"
+
+
+    </RelativeLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/settings_popup"
+        android:layout_width="225dp"
+        android:layout_height="300dp"
+        android:background="@drawable/menu_bg"
+        android:orientation="vertical"
+        android:layout_alignParentEnd="false"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@+id/arena_popup"
+        android:layout_marginTop="50dp"
+        android:layout_alignBottom="@+id/arena_popup">
+
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="300dp"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/menu_bg"
-            android:orientation="vertical">
+            android:layout_height="fill_parent">
 
-            <LinearLayout
-                android:orientation="vertical"
+            <ScrollView
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_height="fill_parent"
+                android:id="@+id/scrollView2"
+                android:layout_weight="1"
 
-                <ScrollView
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:id="@+id/scrollView2"
-                    android:layout_weight="1"
-
-                    android:background="@drawable/menu_bg2">
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent">
-
-                        <CheckBox
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Notification LED"
-                            android:id="@+id/cbLED" />
-                        <CheckBox
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Notification Sound"
-                            android:id="@+id/cbSOUND" />
-                        <CheckBox
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Notification Vibrate"
-                            android:id="@+id/cbVIBRATE" />
-                        <CheckBox
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:text="20 min."
-                            android:id="@+id/cb20" />
-                        <CheckBox
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:text="40 min."
-                            android:id="@+id/cb40" />
-                        <CheckBox
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:text="60 min."
-                            android:id="@+id/cb60" />
-
-                    </LinearLayout>
-                </ScrollView>
+                android:background="@drawable/menu_bg2">
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
-                    android:layout_height="215dp"
-                    android:layout_weight="1">
+                    android:layout_height="fill_parent">
 
-                    <Button
+                    <CheckBox
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="Cancel Notifications"
-                        android:id="@+id/cancelNotify"
-                        android:textStyle="bold|italic" />
-
-                    <Button
-                        android:id="@+id/clearArena"
+                        android:text="Notification LED"
+                        android:id="@+id/cbLED" />
+                    <CheckBox
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/c"
-                        android:textStyle="bold|italic" />
+                        android:text="Notification Sound"
+                        android:id="@+id/cbSOUND" />
+                    <CheckBox
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Notification Vibrate"
+                        android:id="@+id/cbVIBRATE" />
+                    <CheckBox
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="20 min."
+                        android:id="@+id/cb20" />
+                    <CheckBox
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="40 min."
+                        android:id="@+id/cb40" />
+                    <CheckBox
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="60 min."
+                        android:id="@+id/cb60" />
 
-                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="215dp"
+                android:layout_weight="1">
+
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel Notifications"
+                    android:id="@+id/cancelNotify"
+                    android:textStyle="bold|italic" />
+
+                <Button
+                    android:id="@+id/clearArena"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/c"
+                    android:textStyle="bold|italic" />
 
             </LinearLayout>
-        </RelativeLayout>
 
+        </LinearLayout>
     </RelativeLayout>
 
 

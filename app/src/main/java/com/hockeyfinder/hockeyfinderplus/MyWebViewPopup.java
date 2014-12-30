@@ -255,8 +255,8 @@ public class MyWebViewPopup extends Fragment {
 
                         if (type == WebView.HitTestResult.IMAGE_TYPE || type == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE) {
                             imageUrl = result.getExtra();
-                            contextpopup(imageUrl, type);
-                            Log.i("HTTP TEST", "image" + " " + imageUrl + " " + type);
+                            contextpopup(imageUrl, 5);
+                            Log.i("HTTP TEST", "image" + " " + imageUrl + " " + 5);
 
                         } else if (type == WebView.HitTestResult.SRC_ANCHOR_TYPE) {
                             if (imageUrl.contains("maps.google")) {
