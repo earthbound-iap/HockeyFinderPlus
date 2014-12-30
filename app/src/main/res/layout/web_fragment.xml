@@ -185,7 +185,7 @@
                 android:layout_marginTop="10dp"
                 android:id="@+id/scrollView"
                 android:layout_weight="1"
-                android:background="@drawable/menu_bg">
+                android:background="@drawable/menu_bg2">
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -324,7 +324,7 @@
                     android:id="@+id/scrollView2"
                     android:layout_weight="1"
 
-                    android:background="@drawable/menu_bg">
+                    android:background="@drawable/menu_bg2">
 
                     <LinearLayout
                         android:orientation="vertical"

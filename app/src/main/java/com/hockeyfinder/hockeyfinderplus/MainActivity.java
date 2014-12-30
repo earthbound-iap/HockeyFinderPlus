@@ -14,6 +14,7 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.NotificationCompat;
@@ -872,6 +873,23 @@ public class MainActivity extends Activity {
             }else {
                 cbFLAAASC.setChecked(false);
             }
+        if(cbExcel.isChecked() &&
+                cbSchwans.isChecked() &&
+                cbFogerty.isChecked() &&
+                cbBrooklynPark.isChecked() &&
+                cbVadnais.isChecked() &&
+                cbVeterans.isChecked() &&
+                cbVictory.isChecked() &&
+                cbPolar.isChecked() &&
+                cbMNMade.isChecked() &&
+                cbParadeIceGarden.isChecked() &&
+                cbOscarJohnson.isChecked() &&
+                cbHighland.isChecked() &&
+                cbFLAAASC.isChecked()){
+            cbAll.setChecked(true);
+        }else {
+            cbAll.setChecked(false);
+        }
 
         View.OnClickListener onClickListener4 = new View.OnClickListener() {
 
@@ -1306,29 +1324,7 @@ public class MainActivity extends Activity {
 
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,ContextMenu.ContextMenuInfo menuInfo) {
 
-        super.onCreateContextMenu(menu, v, menuInfo);
-
-        WebView.HitTestResult result = ((WebView) v).getHitTestResult();
-
-        if (result != null) {
-
-            int type = result.getType();
-
-            // Confirm type is an image
-            if (type == WebView.HitTestResult.IMAGE_TYPE || type == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE) {
-
-                imageUrl = result.getExtra();
-
-                contextpopup(imageUrl);
-
-            }
-
-        }
-
-    }
 
     public void downloadFile(String uRl2) {
 
@@ -1365,16 +1361,43 @@ public class MainActivity extends Activity {
 
     }
 
-    public void contextpopup(String imageUrl) {
+    public void contextpopup(String imageUrl, int type) {
 
         final RelativeLayout context_popup = (RelativeLayout) findViewById(R.id.context_popup);
 
         Button contextClose = (Button) findViewById(R.id.contextClose);
         Button contextSave = (Button) findViewById(R.id.contextSave);
+        Button openNav = (Button) findViewById(R.id.openNav);
 
         context_popup.setVisibility(View.VISIBLE);
 
+        Log.wtf("URL/TYPE",  imageUrl + type);
+
         final String uRl2 = imageUrl;
+
+        if (imageUrl.contains("jpg")){
+
+        }
+
+        if (type == WebView.HitTestResult.IMAGE_TYPE || type == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE) {
+
+            openNav.setVisibility(View.GONE);
+            contextSave.setVisibility(View.VISIBLE);
+
+        } else if (type == WebView.HitTestResult.GEO_TYPE) {
+
+            openNav.setVisibility(View.VISIBLE);
+            contextSave.setVisibility(View.GONE);
+
+        } else if (type == WebView.HitTestResult.EMAIL_TYPE) {
+
+
+
+        } else if (type == WebView.HitTestResult.PHONE_TYPE) {
+
+
+
+        }
 
         View.OnClickListener onClickListener5 = new View.OnClickListener() {
 
@@ -1382,6 +1405,11 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
 
                 switch (view.getId()) {
+
+                    case R.id.openNav:
+                        context_popup.setVisibility(View.INVISIBLE);
+                        break;
+
                     case R.id.contextClose:
                         context_popup.setVisibility(View.INVISIBLE);
                         break;
@@ -1401,9 +1429,12 @@ public class MainActivity extends Activity {
 
         };
 
+        openNav.setOnClickListener(onClickListener5);
         contextClose.setOnClickListener(onClickListener5);
         contextSave.setOnClickListener(onClickListener5);
 
     }
+
+
 
 }
