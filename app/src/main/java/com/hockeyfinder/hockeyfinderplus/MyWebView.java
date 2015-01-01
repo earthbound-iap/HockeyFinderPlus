@@ -19,25 +19,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.DownloadListener;
 import android.webkit.GeolocationPermissions;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.UnsupportedEncodingException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 public class MyWebView extends Fragment {
 
     String imageUrl ="";
 
     private SwipeRefreshLayout swipeLayout;
+
+    File sdDir = new File(Environment.getExternalStorageDirectory().getPath());
 
     @SuppressLint("SetJavaScriptEnabled") @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -52,6 +57,33 @@ public class MyWebView extends Fragment {
         arena_popup.setVisibility(View.INVISIBLE);
         settings_popup.setVisibility(View.INVISIBLE);
 
+            class MyJavaScriptInterface {
+                @JavascriptInterface
+                @SuppressWarnings("unused")
+                public void processHTML(String html) {
+
+                    File sdDir = new File(Environment.getExternalStorageDirectory().getPath());
+                    File myFile = new File(sdDir.getAbsolutePath() + "/HockeyFinder/Data/source.txt");
+                    try {
+                        //noinspection ResultOfMethodCallIgnored
+                        myFile.createNewFile();
+
+                        FileOutputStream fOut = new FileOutputStream(myFile);
+                        OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+                        myOutWriter.append(html);
+
+                        Log.w("SOURCE", "FILEWRITTEN: " + "source.txt");
+
+                        myOutWriter.close();
+                        fOut.close();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
         // set up the WebView
         if(getView() != null) {
             ((MainActivity) getActivity()).webView = (WebView) getView().findViewById(R.id.webView);
@@ -65,6 +97,9 @@ public class MyWebView extends Fragment {
             ((MainActivity) getActivity()).webView.getSettings().setAllowFileAccess (true);
             ((MainActivity) getActivity()).webView.getSettings().setSupportZoom (true);
             ((MainActivity) getActivity()).webView.getSettings().setBuiltInZoomControls(true);
+
+                ((MainActivity) getActivity()).webView.addJavascriptInterface(new MyJavaScriptInterface(), "HTMLOUT");
+
             swipeLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_container);
         }
 
@@ -75,8 +110,6 @@ public class MyWebView extends Fragment {
             }
 
         });
-
-
 
         //noinspection deprecation
         swipeLayout.setColorScheme(android.R.color.holo_blue_bright,
@@ -107,7 +140,6 @@ public class MyWebView extends Fragment {
 
         //noinspection deprecation
         ((MainActivity)getActivity()).webView.setWebViewClient(new WebViewClient() {
-
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -143,8 +175,6 @@ public class MyWebView extends Fragment {
                 return true;
             }
 
-
-
             //set progress bar visibilty on page start
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
@@ -172,10 +202,60 @@ public class MyWebView extends Fragment {
                 view.loadUrl("javascript:(function() { " +
                         "document.getElementsByClassName('header navbar navbar-inverse navbar-fixed-top')[0].style.display = 'none'; " +
                         "})()");
+                if (((MainActivity) getActivity()).webView.getUrl().equals("http://www.hockeyfinder.com/my-games/")) {
+                    view.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
+
+                    File file = new File(sdDir.getAbsolutePath() + "/HockeyFinder/Data/source.txt");
+
+                    String testHtml = null; // from commons io
+
+                    try {
+
+                        testHtml = FileUtils.readFileToString(file);
+
+                    } catch (IOException e) {
+
+                        e.printStackTrace();
+
+                        Log.i("bad", e.getMessage());
+
+                    }
+                    try {
+
+                        String[] body = StringUtils.substringsBetween(testHtml, "<div class=\"portlet-body\">", "</div>");
+                        String head = "<html><body>";
+
+                        String foot = "</body></html>";
+
+                        File sdDir = new File(Environment.getExternalStorageDirectory().getPath());
+                        File myFile = new File(sdDir.getAbsolutePath() + "/HockeyFinder/Data/htmlLeague.txt");
+                        try {
+                            //noinspection ResultOfMethodCallIgnored
+                            myFile.createNewFile();
+
+                            FileOutputStream fOut = new FileOutputStream(myFile);
+                            OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+                            myOutWriter.append(head);
+                            for (int n = 0; n < body.length; n++) {
+                                myOutWriter.append(body[n]);
+                            }
+                            myOutWriter.append(foot);
+
+                            Log.w("SOURCE", "FILEWRITTEN: " + "source.txt");
+
+                            myOutWriter.close();
+                            fOut.close();
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(getActivity(), "no app Found", Toast.LENGTH_SHORT).show();
+                    }
 
 
-
-
+                }
 
                 final Handler handler = new Handler();
 
@@ -185,7 +265,7 @@ public class MyWebView extends Fragment {
 
                         swipeLayout.setRefreshing(false);
 
-                        ((MainActivity)getActivity()).webView.setVisibility(View.VISIBLE);
+                        ((MainActivity) getActivity()).webView.setVisibility(View.VISIBLE);
 
                         rlpopup2.setVisibility(View.INVISIBLE);
 
@@ -247,7 +327,6 @@ public class MyWebView extends Fragment {
 
         });
 
-
     }
 
     public void contextpopup(String imageUrl, int type) {
@@ -285,8 +364,6 @@ public class MyWebView extends Fragment {
 
         } else if (type == WebView.HitTestResult.PHONE_TYPE) {
 
-
-
         }
 
         View.OnClickListener onClickListener5 = new View.OnClickListener() {
@@ -295,8 +372,6 @@ public class MyWebView extends Fragment {
             public void onClick(View view) {
 
                 switch (view.getId()) {
-
-
 
                     case R.id.openNav:
                         context_popup.setVisibility(View.INVISIBLE);
@@ -345,6 +420,7 @@ public class MyWebView extends Fragment {
             }
 
         };
+
         openHTTP.setOnClickListener(onClickListener5);
         openNav.setOnClickListener(onClickListener5);
         contextClose.setOnClickListener(onClickListener5);
@@ -367,8 +443,6 @@ public class MyWebView extends Fragment {
         super.onConfigurationChanged(newConfig);
 
     }
-
-
 
     public void downloadFile(String uRl2) {
 

@@ -52,4 +52,12 @@
         android:title="@string/startservice"
         tools:ignore="AppCompatResource" />
 
+    <item
+        android:id="@+id/menu_item10"
+        android:orderInCategory="107"
+        android:showAsAction="never"
+        android:icon="@drawable/ic_action_new_event"
+        android:title="Open Leagues"
+        tools:ignore="AppCompatResource" />
+
 </menu>

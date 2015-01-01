@@ -35,7 +35,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.Objects;
 
@@ -53,6 +55,7 @@ public class MyService extends IntentService {
     long timeMillis1;
 
     File sdDir = new File(Environment.getExternalStorageDirectory().getPath());
+
 
     public MyService() {
 
@@ -83,6 +86,23 @@ public class MyService extends IntentService {
             CheckConnection ch = new CheckConnection();
 
             boolean status = ch.isNetworkAvailable(getApplicationContext());
+
+            Calendar c = Calendar.getInstance();
+            int dayOfWeek = c.get(Calendar.DATE);
+            int month2 = c.get(Calendar.MONTH) + 1;
+            SimpleDateFormat month_date = new SimpleDateFormat("MMM");
+            String month = month_date.format(c.getTime());
+
+
+            String mydate2 = month2 + "/" + dayOfWeek;
+            String mydate = month + " " + dayOfWeek;
+
+
+            Log.w(TAG, "DATE " + mydate);
+            Log.w(TAG, "DATE " + mydate2);
+
+            todayGameCheck(notification, mydate, mydate2);
+
 
             if (status) {
                 notify.clear();
@@ -136,11 +156,15 @@ public class MyService extends IntentService {
         String[] date = StringUtils.substringsBetween(testHtml, "<span class=\"date\">", "</span>");
         String[] title = StringUtils.substringsBetween(testHtml, "<h4 style=\"text-align: center;font-weight: bold\">", "&nbsp;");
         String[] time = StringUtils.substringsBetween(testHtml, "<span class=\"time\">", "</span>");
+        String[] players = StringUtils.substringsBetween(testHtml, "<p style=\"\"><span><span class=\"badge badge-info\">", "</span>");
+        String[] goalies = StringUtils.substringsBetween(testHtml, "player spot(s) and <span class=\"badge badge-info\">", "</span>");
+        String[] address = StringUtils.substringsBetween(testHtml, "<address>","</address>");
+        String[] link = StringUtils.substringsBetween(testHtml, "<i class=\"icon-zoom-in m-icon-white\"></i></a>  \n" +
+                "\t\t\t\t\t\t\t\t<a href=\"","\" class=\"btn black pull-right\">");
 
         for (int i = 0; i < title.length; i++) {
 
             //noinspection StatementWithEmptyBody
-
             if (value.contains(title[i])) {
                 String  dCheck= (title[i] + " " + date[i] + " " + time[i]);
                 File myFile = new File(sdDir.getAbsolutePath() + "/HockeyFinder/Data/dateCheck.txt");
@@ -152,15 +176,23 @@ public class MyService extends IntentService {
                             while (-1 != (len = in.read(data1))) {
                                 if (new String(data1, 0, len).contains(dCheck)) {
 
-                                    timeMillis1 = System.currentTimeMillis();
-                                    String dateInMilliseconds = Objects.toString(timeMillis1, null);
-                                    String dateFormat = "hh:mm:ss dd/MM/yyyy";
-                                    dateTime1 = DateFormat.format(dateFormat, Long.parseLong(dateInMilliseconds)).toString();
-                                    notify.add(len + " contains: " + dCheck);
+                                    TinyDB tinydb = new TinyDB(getApplicationContext());
+                                    final ArrayList<Integer> counter2 = tinydb.getListInt("counter2");
+                                    if (counter2.contains(notificationID +i)){
+                                        notification(notification, players[i], goalies[i], address[i], link[i], title [i], title[i], date[i], time[i], i, dCheck );
+                                        Log.i(TAG, "NOTIFICATIONS " + counter2 + " " + (notificationID +i) + " UPDATED" );
+                                    }else {
+
+                                        timeMillis1 = System.currentTimeMillis();
+                                        String dateInMilliseconds = Objects.toString(timeMillis1, null);
+                                        String dateFormat = "hh:mm:ss dd/MM/yyyy";
+                                        dateTime1 = DateFormat.format(dateFormat, Long.parseLong(dateInMilliseconds)).toString();
+                                        notify.add(len + " contains: " + dCheck);
+                                    }
                                 } else {
                                         writeToFile(dCheck);
                                         counter.add(i);
-                                        notification(notification, title [i], title[i], date[i], time[i], i, dCheck );
+                                        notification(notification, players[i], goalies[i], address[i], link[i], title [i], title[i], date[i], time[i], i, dCheck );
                                 }
                             }
                     } catch (IOException e) {
@@ -176,7 +208,7 @@ public class MyService extends IntentService {
                         String dateFormat = "hh:mm:ss dd/MM/yyyy";
                         dateTime1 = DateFormat.format(dateFormat, Long.parseLong(dateInMilliseconds)).toString();
                         counter.add(i);
-                        notification(notification, title [i], title[i], date[i], time[i], i, dCheck );
+                        notification(notification, players[i], goalies[i], address[i], link[i], title [i], title[i], date[i], time[i], i, dCheck );
                     } catch (Exception e) {
 
                         e.printStackTrace();
@@ -195,7 +227,7 @@ public class MyService extends IntentService {
 
         Object[] mStringArray = notify.toArray();
         for (Object aMStringArray : mStringArray) Log.wtf(TAG, "NOTIFYCHECK: " + aMStringArray);
-        notification(notification, "Service Run", "GAMECHECK:", " ", dateTime1, 1002, "Game Check Run");
+        notification(notification," "," ", " ", " ", "Service Run", "GAMECHECK:", " ", dateTime1, 1002, "Game Check Run");
 
     }
 
@@ -280,14 +312,76 @@ public class MyService extends IntentService {
         }
     }
 
-    public void notification(ArrayList<String> notification, String ticker, String title, String date, String time, int i, String dCheck ){
+    public void notification(ArrayList<String> notification, String players, String goalies, String address, String link, String ticker, String title, String date, String time, int i, String dCheck ){
 
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+        String tx1 = "";
+        String tx2 = "";
+        String tx3 = "";
 
-        mBuilder.setTicker(ticker);
-        mBuilder.setContentTitle(title);
-        mBuilder.setContentText(date + " " + time);
-        mBuilder.setSmallIcon(R.drawable.ic_launcher);
+        String[] textStr = address.split("\n");
+        for (int n = 0; n < textStr.length; n++) {
+            textStr[n] = textStr[n].trim();
+            textStr[n] = textStr[n].replace("<br>", "");
+            textStr[n] = textStr[n].replace("\t\t", "");
+        }
+
+        if (textStr.length > 2) {
+            tx1 = textStr[1];
+            tx2 = textStr[2];
+            tx3 = textStr[3];
+        }
+        int requestID = (int) System.currentTimeMillis();
+
+        String link2 = "http://hockeyfinder.com" + link;
+
+        Intent resultIntent = new Intent(this, MainActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(MainActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        String uri2 = "tel:" + tx3.trim() ;
+        Intent intent1 = new Intent(Intent.ACTION_DIAL);
+        intent1.setData(Uri.parse(uri2));
+        PendingIntent pIntent1 = PendingIntent.getActivity(this, 0, intent1, 0);
+
+        String uri3 = "google.navigation:q=" + tx1 + " " + tx2 ;
+        Intent intent2 = new Intent(Intent.ACTION_VIEW);
+        intent2.setData(Uri.parse(uri3));
+        PendingIntent pIntent2 = PendingIntent.getActivity(this, 0, intent2, 0);
+
+        Log.i(TAG, "LINK " + link);
+
+        Intent intent3 = new Intent(this, NotificationReceiver.class);
+        intent3.putExtra("akey", link2);
+        PendingIntent pIntent3 = PendingIntent.getActivity(this, requestID, intent3, 0);
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+
+        .setTicker(ticker)
+        .setContentTitle(title)
+        .setContentText(date + " " + time)
+        .setSmallIcon(R.drawable.ic_launcher)
+
+        .addAction(R.drawable.ic_action_call, "", pIntent1)
+
+        .addAction(R.drawable.ic_action_locate, "", pIntent2)
+
+        .addAction(R.drawable.ic_action_paste, "", pIntent3);
+
+        NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+
+        inboxStyle.addLine("Player Spots: " + players);
+        inboxStyle.addLine("Goalie Spots: " + goalies);
+        inboxStyle.addLine("Address: " + tx1);
+        inboxStyle.addLine("Address: " + tx2);
+        inboxStyle.addLine("Phone: " + tx3);
+        inboxStyle.addLine("Web: www.hockeyfinder.com" + link);
+
+        // Sets a title for the Inbox style big view
+        inboxStyle.setBigContentTitle("Game Details:");
+
+        mBuilder.setStyle(inboxStyle);
 
         if(notification.contains("LED")){
             mBuilder.setLights(Color.GREEN, 1000, 10000);
@@ -306,11 +400,6 @@ public class MyService extends IntentService {
         }else {
         }
 
-        Intent resultIntent = new Intent(this, MainActivity.class);
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addParentStack(MainActivity.class);
-        stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(resultPendingIntent);
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(notificationID + i, mBuilder.build());
@@ -337,6 +426,80 @@ public class MyService extends IntentService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public void todayGameCheck(ArrayList<String> notification, String mydate, String mydate2){
+
+            File myFile = new File(sdDir.getAbsolutePath() + "/HockeyFinder/Data/htmlleague.txt");
+
+            if (myFile.exists()) {
+                try {
+                    FileInputStream in = new FileInputStream(myFile);
+                    int len;
+                    byte[] data1 = new byte[16384];
+                    while (-1 != (len = in.read(data1))) {
+                        if (new String(data1, 0, len).contains(mydate)) {
+
+                            int of = 123456;
+                            leagueNotification(notification, "PickUp Game", of);
+
+                        }
+                        if (new String(data1, 0, len).contains(mydate2)) {
+
+                            int of = 234567;
+                            leagueNotification(notification, "League Game", of);
+
+                        }
+
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                }
+
+            } else {
+
+            }
+
+    }
+
+    public void leagueNotification(ArrayList<String> notification, String type, int of){
+
+        Intent resultIntent = new Intent(this, LeagueGames.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(MainActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+
+                .setTicker("GAME TODAY")
+                .setContentTitle(type)
+                .setContentText("Click Here To View Games")
+                .setSmallIcon(R.drawable.ic_launcher);
+
+        if(notification.contains("LED")){
+            mBuilder.setLights(Color.GREEN, 1000, 10000);
+        }else {
+        }
+
+        if(notification.contains("VIBRATE")){
+            mBuilder.setVibrate(new long[]{1000, 1000, 1000, 1000, 1000});
+        }else {
+        }
+
+        if(notification.contains("SOUND")){
+            Uri uri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+            mBuilder.setSound(uri);
+        }else {
+        }
+
+        mBuilder.setContentIntent(resultPendingIntent);
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(notificationID + of, mBuilder.build());
 
     }
 

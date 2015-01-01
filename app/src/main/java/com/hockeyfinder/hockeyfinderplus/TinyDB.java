@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 
-public class TinyDB  extends MainActivity{
+public class TinyDB  {
 
     Context mContext;
 

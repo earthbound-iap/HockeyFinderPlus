@@ -3,24 +3,22 @@ package com.hockeyfinder.hockeyfinderplus;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.DownloadManager;
 import android.app.FragmentTransaction;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -35,8 +33,6 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
-import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -72,13 +68,7 @@ public class MainActivity extends Activity {
 
     int popupCounter = 0;
 
-    private NotificationManager mNotificationManager;
-
-    private int notificationID = 10;
-
     int minutes1;
-
-    String imageUrl ="";
 
     private PendingIntent pendingIntent;
 
@@ -88,6 +78,10 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.hockeyfinder.hockeyfinderplus.NOTIFICATION_LISTENER_EXAMPLE");
 
         setContentView(R.layout.activity_main);
 
@@ -99,6 +93,7 @@ public class MainActivity extends Activity {
         //noinspection ResultOfMethodCallIgnored
 
         if (!createDir.exists()) {
+            //noinspection ResultOfMethodCallIgnored
             createDir.mkdirs();
         }
 
@@ -315,7 +310,6 @@ public class MainActivity extends Activity {
 
     }
 
-
     @Override
     public void onBackPressed() {
 
@@ -331,7 +325,6 @@ public class MainActivity extends Activity {
         }
 
     }
-
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -708,7 +701,6 @@ public class MainActivity extends Activity {
         displayNotification();
 
     }
-
 
     public void arenapopup(){
 
@@ -1167,6 +1159,10 @@ public class MainActivity extends Activity {
                             minutes1 = 3600000;
                         }
 
+                        Intent i = new Intent("com.hockeyfinder.hockeyfinderplus.NOTIFICATION_LISTENER_SERVICE_EXAMPLE");
+                        i.putExtra("command","list");
+                        sendBroadcast(i);
+
                         TinyDB tinydb = new TinyDB(getApplicationContext());
 
                         tinydb.putList("arena", arena);
@@ -1183,9 +1179,16 @@ public class MainActivity extends Activity {
 
                     case R.id.clearArena:
 
-                        File file = new File(sdDir.getAbsolutePath() + "/HockeyFinder/dateCheck.txt");
+                        tinydb = new TinyDB(getApplicationContext());
 
-                        //noinspection ResultOfMethodCa
+
+                        final ArrayList<Integer> counter2 = tinydb.getListInt("counter2");
+
+                        counter2.clear();
+
+                        File file = new File(sdDir.getAbsolutePath() + "/HockeyFinder/Data/dateCheck.txt");
+
+                        //noinspection ResultOfMethodCa,ResultOfMethodCallIgnored
                         file.delete();
 
                         break;
@@ -1251,14 +1254,11 @@ public class MainActivity extends Activity {
 
     }
 
-
     public void startAlarm(int minutes) {
 
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-        int interval = minutes;
-
-        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), minutes, pendingIntent);
 
         Log.i("ALARM/MANAGER", "set: " + minutes);
 
@@ -1295,10 +1295,9 @@ public class MainActivity extends Activity {
 
     }
 
-
     public int[] killNotifications(ArrayList<Integer> integers){
 
-        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         int[] ret = new int[integers.size()];
 
@@ -1310,6 +1309,7 @@ public class MainActivity extends Activity {
 
             ret[i] = iterator.next();
 
+            int notificationID = 10;
             mNotificationManager.cancel(notificationID + ret[i]);
 
             String beanCount = Integer.toString(ret[i]);
@@ -1324,117 +1324,12 @@ public class MainActivity extends Activity {
 
     }
 
+    class NotificationReceiver extends BroadcastReceiver {
 
+        @Override
+        public void onReceive(Context context, Intent intent) {
 
-    public void downloadFile(String uRl2) {
-
-        File direct = new File(Environment.getExternalStorageDirectory() + "/HockeyFinder/Images/");
-
-        if (!direct.exists()) {
-            direct.mkdirs();
         }
-
-        String baseName = FilenameUtils.getBaseName(uRl2);
-        String extension = FilenameUtils.getExtension(uRl2);
-
-        Log.i("SAVE/IMAGE",  "1 " + uRl2);
-
-        DownloadManager mgr = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-
-        Uri downloadUri = Uri.parse(uRl2);
-
-        DownloadManager.Request request = new DownloadManager.Request(downloadUri);
-
-        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE)
-                .setAllowedOverRoaming(false)
-                .setTitle("Demo")
-                .setDescription("Something useful. No, really.")
-                .setDestinationInExternalPublicDir("/HockeyFinder/Images/", baseName + "." + extension);
-
-        mgr.enqueue(request);
-
-        Log.i("SAVE/IMAGE",  "2 " + baseName + "." + extension);
-
-        Toast.makeText(this, "sdCard/HockeyFinder/Images/" + baseName + "." + extension, Toast.LENGTH_LONG).show();
-
-        imageUrl = "";
-
     }
-
-    public void contextpopup(String imageUrl, int type) {
-
-        final RelativeLayout context_popup = (RelativeLayout) findViewById(R.id.context_popup);
-
-        Button contextClose = (Button) findViewById(R.id.contextClose);
-        Button contextSave = (Button) findViewById(R.id.contextSave);
-        Button openNav = (Button) findViewById(R.id.openNav);
-
-        context_popup.setVisibility(View.VISIBLE);
-
-        Log.wtf("URL/TYPE",  imageUrl + type);
-
-        final String uRl2 = imageUrl;
-
-        if (imageUrl.contains("jpg")){
-
-        }
-
-        if (type == WebView.HitTestResult.IMAGE_TYPE || type == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE) {
-
-            openNav.setVisibility(View.GONE);
-            contextSave.setVisibility(View.VISIBLE);
-
-        } else if (type == WebView.HitTestResult.GEO_TYPE) {
-
-            openNav.setVisibility(View.VISIBLE);
-            contextSave.setVisibility(View.GONE);
-
-        } else if (type == WebView.HitTestResult.EMAIL_TYPE) {
-
-
-
-        } else if (type == WebView.HitTestResult.PHONE_TYPE) {
-
-
-
-        }
-
-        View.OnClickListener onClickListener5 = new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                switch (view.getId()) {
-
-                    case R.id.openNav:
-                        context_popup.setVisibility(View.INVISIBLE);
-                        break;
-
-                    case R.id.contextClose:
-                        context_popup.setVisibility(View.INVISIBLE);
-                        break;
-
-                    case R.id.contextSave:
-                        if(uRl2.endsWith("png")||uRl2.endsWith("jpg")||uRl2.endsWith("gif")||uRl2.endsWith("bmp")) {
-                            downloadFile(uRl2);
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Not An Image File", Toast.LENGTH_LONG).show();
-                        }
-                        context_popup.setVisibility(View.INVISIBLE);
-                        break;
-
-                }
-
-            }
-
-        };
-
-        openNav.setOnClickListener(onClickListener5);
-        contextClose.setOnClickListener(onClickListener5);
-        contextSave.setOnClickListener(onClickListener5);
-
-    }
-
-
 
 }
